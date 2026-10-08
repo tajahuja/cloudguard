@@ -22,7 +22,7 @@ st.title('CloudGuard')
 st.caption('Cloud configuration → explainable risk → prioritized remediation • Synthetic local assessment')
 with st.sidebar:
     st.header('Assessment workspace')
-    selected=st.selectbox('Environment',['startup','secure','vulnerable','enterprise'])
+    selected=st.selectbox('Environment',['startup','secure','vulnerable','enterprise'],key='environment')
     st.caption('Read-only local files. No AWS connection is made.')
     st.link_button('LinkedIn','https://www.linkedin.com/in/tajahuja9/',use_container_width=True)
     st.link_button('GitHub profile','https://github.com/tajahuja',use_container_width=True)
@@ -72,7 +72,7 @@ else:
 st.subheader('Prioritized remediation queue')
 if assessment.findings:
     columns=st.columns(4)
-    levels=columns[0].multiselect('Severity',list(counts),default=list(counts))
+    levels=columns[0].multiselect('Severity',list(counts),default=list(counts),key='severity_filter')
     kinds=columns[1].multiselect('Resource type',sorted(all_findings.resource_type.unique()),
                                  default=sorted(all_findings.resource_type.unique()))
     categories=columns[2].multiselect('Rule category',sorted(all_findings.category.unique()),
@@ -85,7 +85,7 @@ if assessment.findings:
             ['finding_id','severity','risk_score','resource_name','category','title','status']],
             hide_index=True,use_container_width=True)
         choices={f'{f.finding_id} • {f.title} • {f.resource_name}':f for f in visible}
-        choice=st.selectbox('Inspect finding',list(choices))
+        choice=st.selectbox('Inspect finding',list(choices),key='finding')
         finding=choices[choice]
         st.subheader(finding.title)
         st.write(f'**{finding.severity} · {finding.risk_score}/100 · {finding.resource_type}/{finding.resource_name}**')

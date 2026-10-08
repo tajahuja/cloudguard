@@ -6,6 +6,12 @@ from cloudguard.config import MAX_INPUT_BYTES
 from cloudguard.models.resources import Environment
 from cloudguard.rules.secrets.redaction import mask
 
+class NoAliasSafeLoader(yaml.SafeLoader):
+    def compose_node(self, parent, index):
+        if self.check_event(yaml.AliasEvent):
+            raise yaml.YAMLError('YAML aliases are not supported.')
+        return super().compose_node(parent, index)
+
 def load_environment(path: Path) -> Environment:
     """Safe JSON/YAML loading with size limits and errors that do not echo input."""
     if path.suffix.lower() not in {'.json', '.yaml', '.yml'}:
@@ -16,7 +22,7 @@ def load_environment(path: Path) -> Environment:
         raise ValueError('Environment exceeds the 5 MB input limit.')
     try:
         text = payload.decode('utf-8-sig')
-        raw = json.loads(text) if path.suffix.lower() == '.json' else yaml.safe_load(text)
+        raw = json.loads(text) if path.suffix.lower() == '.json' else yaml.load(text, Loader=NoAliasSafeLoader)
         # Redaction before normalization also prevents secrets in names/tags leaking into output.
         return Environment.model_validate(mask(raw))
     except (ValidationError, yaml.YAMLError, ValueError, TypeError, RecursionError):

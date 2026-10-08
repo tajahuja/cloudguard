@@ -1,5 +1,4 @@
 import hashlib
-import json
 from collections import Counter
 from cloudguard.models.findings import Finding, Assessment
 from cloudguard.models.resources import Environment

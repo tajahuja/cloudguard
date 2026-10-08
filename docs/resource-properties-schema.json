@@ -1,0 +1,615 @@
+{
+  "iam_user": {
+    "$defs": {
+      "AccessKey": {
+        "additionalProperties": false,
+        "properties": {
+          "key_id": {
+            "title": "Key Id",
+            "type": "string"
+          },
+          "active": {
+            "title": "Active",
+            "type": "boolean"
+          },
+          "age_days": {
+            "minimum": 0,
+            "title": "Age Days",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "key_id",
+          "active",
+          "age_days"
+        ],
+        "title": "AccessKey",
+        "type": "object"
+      },
+      "Statement": {
+        "additionalProperties": false,
+        "properties": {
+          "effect": {
+            "enum": [
+              "Allow",
+              "Deny"
+            ],
+            "title": "Effect",
+            "type": "string"
+          },
+          "actions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Actions",
+            "type": "array"
+          },
+          "resources": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Resources",
+            "type": "array"
+          },
+          "conditions": {
+            "additionalProperties": true,
+            "title": "Conditions",
+            "type": "object"
+          }
+        },
+        "required": [
+          "effect",
+          "actions",
+          "resources"
+        ],
+        "title": "Statement",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "console_access": {
+        "title": "Console Access",
+        "type": "boolean"
+      },
+      "mfa_enabled": {
+        "title": "Mfa Enabled",
+        "type": "boolean"
+      },
+      "is_root": {
+        "default": false,
+        "title": "Is Root",
+        "type": "boolean"
+      },
+      "last_used_days": {
+        "minimum": 0,
+        "title": "Last Used Days",
+        "type": "integer"
+      },
+      "managed_policies": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Managed Policies",
+        "type": "array"
+      },
+      "policy_ids": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Policy Ids",
+        "type": "array"
+      },
+      "inline_statements": {
+        "items": {
+          "$ref": "#/$defs/Statement"
+        },
+        "title": "Inline Statements",
+        "type": "array"
+      },
+      "access_keys": {
+        "items": {
+          "$ref": "#/$defs/AccessKey"
+        },
+        "title": "Access Keys",
+        "type": "array"
+      },
+      "trust_principals": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Trust Principals",
+        "type": "array"
+      },
+      "trust_has_conditions": {
+        "title": "Trust Has Conditions",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "console_access",
+      "mfa_enabled",
+      "last_used_days",
+      "managed_policies",
+      "policy_ids",
+      "inline_statements",
+      "access_keys",
+      "trust_principals",
+      "trust_has_conditions"
+    ],
+    "title": "Identity",
+    "type": "object"
+  },
+  "iam_role": {
+    "$defs": {
+      "AccessKey": {
+        "additionalProperties": false,
+        "properties": {
+          "key_id": {
+            "title": "Key Id",
+            "type": "string"
+          },
+          "active": {
+            "title": "Active",
+            "type": "boolean"
+          },
+          "age_days": {
+            "minimum": 0,
+            "title": "Age Days",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "key_id",
+          "active",
+          "age_days"
+        ],
+        "title": "AccessKey",
+        "type": "object"
+      },
+      "Statement": {
+        "additionalProperties": false,
+        "properties": {
+          "effect": {
+            "enum": [
+              "Allow",
+              "Deny"
+            ],
+            "title": "Effect",
+            "type": "string"
+          },
+          "actions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Actions",
+            "type": "array"
+          },
+          "resources": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Resources",
+            "type": "array"
+          },
+          "conditions": {
+            "additionalProperties": true,
+            "title": "Conditions",
+            "type": "object"
+          }
+        },
+        "required": [
+          "effect",
+          "actions",
+          "resources"
+        ],
+        "title": "Statement",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "console_access": {
+        "title": "Console Access",
+        "type": "boolean"
+      },
+      "mfa_enabled": {
+        "title": "Mfa Enabled",
+        "type": "boolean"
+      },
+      "is_root": {
+        "default": false,
+        "title": "Is Root",
+        "type": "boolean"
+      },
+      "last_used_days": {
+        "minimum": 0,
+        "title": "Last Used Days",
+        "type": "integer"
+      },
+      "managed_policies": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Managed Policies",
+        "type": "array"
+      },
+      "policy_ids": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Policy Ids",
+        "type": "array"
+      },
+      "inline_statements": {
+        "items": {
+          "$ref": "#/$defs/Statement"
+        },
+        "title": "Inline Statements",
+        "type": "array"
+      },
+      "access_keys": {
+        "items": {
+          "$ref": "#/$defs/AccessKey"
+        },
+        "title": "Access Keys",
+        "type": "array"
+      },
+      "trust_principals": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Trust Principals",
+        "type": "array"
+      },
+      "trust_has_conditions": {
+        "title": "Trust Has Conditions",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "console_access",
+      "mfa_enabled",
+      "last_used_days",
+      "managed_policies",
+      "policy_ids",
+      "inline_statements",
+      "access_keys",
+      "trust_principals",
+      "trust_has_conditions"
+    ],
+    "title": "Identity",
+    "type": "object"
+  },
+  "iam_policy": {
+    "$defs": {
+      "Statement": {
+        "additionalProperties": false,
+        "properties": {
+          "effect": {
+            "enum": [
+              "Allow",
+              "Deny"
+            ],
+            "title": "Effect",
+            "type": "string"
+          },
+          "actions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Actions",
+            "type": "array"
+          },
+          "resources": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Resources",
+            "type": "array"
+          },
+          "conditions": {
+            "additionalProperties": true,
+            "title": "Conditions",
+            "type": "object"
+          }
+        },
+        "required": [
+          "effect",
+          "actions",
+          "resources"
+        ],
+        "title": "Statement",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "statements": {
+        "items": {
+          "$ref": "#/$defs/Statement"
+        },
+        "title": "Statements",
+        "type": "array"
+      }
+    },
+    "required": [
+      "statements"
+    ],
+    "title": "Policy",
+    "type": "object"
+  },
+  "bucket": {
+    "additionalProperties": false,
+    "properties": {
+      "block_public_access": {
+        "title": "Block Public Access",
+        "type": "boolean"
+      },
+      "public_acl": {
+        "title": "Public Acl",
+        "type": "boolean"
+      },
+      "anonymous_read": {
+        "title": "Anonymous Read",
+        "type": "boolean"
+      },
+      "anonymous_write": {
+        "title": "Anonymous Write",
+        "type": "boolean"
+      },
+      "policy_public": {
+        "title": "Policy Public",
+        "type": "boolean"
+      },
+      "policy_has_conditions": {
+        "title": "Policy Has Conditions",
+        "type": "boolean"
+      },
+      "encrypted": {
+        "title": "Encrypted",
+        "type": "boolean"
+      },
+      "logging_enabled": {
+        "title": "Logging Enabled",
+        "type": "boolean"
+      },
+      "versioning_enabled": {
+        "title": "Versioning Enabled",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "block_public_access",
+      "public_acl",
+      "anonymous_read",
+      "anonymous_write",
+      "policy_public",
+      "policy_has_conditions",
+      "encrypted",
+      "logging_enabled",
+      "versioning_enabled"
+    ],
+    "title": "Bucket",
+    "type": "object"
+  },
+  "security_group": {
+    "$defs": {
+      "NetworkRule": {
+        "additionalProperties": false,
+        "properties": {
+          "protocol": {
+            "enum": [
+              "tcp",
+              "udp",
+              "icmp",
+              "all"
+            ],
+            "title": "Protocol",
+            "type": "string"
+          },
+          "from_port": {
+            "maximum": 65535,
+            "minimum": 0,
+            "title": "From Port",
+            "type": "integer"
+          },
+          "to_port": {
+            "maximum": 65535,
+            "minimum": 0,
+            "title": "To Port",
+            "type": "integer"
+          },
+          "cidr": {
+            "title": "Cidr",
+            "type": "string"
+          }
+        },
+        "required": [
+          "protocol",
+          "from_port",
+          "to_port",
+          "cidr"
+        ],
+        "title": "NetworkRule",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "ingress": {
+        "items": {
+          "$ref": "#/$defs/NetworkRule"
+        },
+        "title": "Ingress",
+        "type": "array"
+      },
+      "egress": {
+        "items": {
+          "$ref": "#/$defs/NetworkRule"
+        },
+        "title": "Egress",
+        "type": "array"
+      }
+    },
+    "required": [
+      "ingress",
+      "egress"
+    ],
+    "title": "SecurityGroup",
+    "type": "object"
+  },
+  "instance": {
+    "additionalProperties": false,
+    "properties": {
+      "public_ip": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Public Ip"
+      },
+      "internet_route": {
+        "title": "Internet Route",
+        "type": "boolean"
+      },
+      "security_group_ids": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Security Group Ids",
+        "type": "array"
+      },
+      "encrypted_volumes": {
+        "title": "Encrypted Volumes",
+        "type": "boolean"
+      },
+      "imdsv2_required": {
+        "title": "Imdsv2 Required",
+        "type": "boolean"
+      },
+      "monitoring_enabled": {
+        "title": "Monitoring Enabled",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "public_ip",
+      "internet_route",
+      "security_group_ids",
+      "encrypted_volumes",
+      "imdsv2_required",
+      "monitoring_enabled"
+    ],
+    "title": "Instance",
+    "type": "object"
+  },
+  "database": {
+    "additionalProperties": false,
+    "properties": {
+      "publicly_accessible": {
+        "title": "Publicly Accessible",
+        "type": "boolean"
+      },
+      "internet_route": {
+        "title": "Internet Route",
+        "type": "boolean"
+      },
+      "port": {
+        "maximum": 65535,
+        "minimum": 1,
+        "title": "Port",
+        "type": "integer"
+      },
+      "security_group_ids": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Security Group Ids",
+        "type": "array"
+      },
+      "encrypted": {
+        "title": "Encrypted",
+        "type": "boolean"
+      },
+      "backups_enabled": {
+        "title": "Backups Enabled",
+        "type": "boolean"
+      },
+      "deletion_protection": {
+        "title": "Deletion Protection",
+        "type": "boolean"
+      },
+      "logging_enabled": {
+        "title": "Logging Enabled",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "publicly_accessible",
+      "internet_route",
+      "port",
+      "security_group_ids",
+      "encrypted",
+      "backups_enabled",
+      "deletion_protection",
+      "logging_enabled"
+    ],
+    "title": "Database",
+    "type": "object"
+  },
+  "audit_log": {
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "title": "Enabled",
+        "type": "boolean"
+      },
+      "multi_region": {
+        "title": "Multi Region",
+        "type": "boolean"
+      },
+      "validation_enabled": {
+        "title": "Validation Enabled",
+        "type": "boolean"
+      },
+      "retention_days": {
+        "minimum": 0,
+        "title": "Retention Days",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "enabled",
+      "multi_region",
+      "validation_enabled",
+      "retention_days"
+    ],
+    "title": "AuditLog",
+    "type": "object"
+  },
+  "monitoring": {
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "title": "Enabled",
+        "type": "boolean"
+      },
+      "retention_days": {
+        "minimum": 0,
+        "title": "Retention Days",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "enabled",
+      "retention_days"
+    ],
+    "title": "Monitoring",
+    "type": "object"
+  }
+}
