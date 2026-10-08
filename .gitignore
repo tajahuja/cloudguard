@@ -1,0 +1,16 @@
+.venv/
+.env
+.aws/
+credentials*
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.test-work/
+.vscode/
+*.db
+*.db-*
+*.log
+findings/*
+reports/*
+!findings/.gitkeep
+!reports/.gitkeep
