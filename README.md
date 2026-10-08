@@ -1,5 +1,7 @@
 # CloudGuard — Cloud Security Misconfiguration & Risk Assessment Platform
 
+**Author:** tajahuja · [LinkedIn](https://www.linkedin.com/in/tajahuja/) · [GitHub](https://github.com/tajahuja)
+
 **Analyze synthetic AWS-style configurations, explain contextual risk, and turn findings into a prioritized remediation plan.**
 
 A functional, local defensive portfolio project for learning cloud security and demonstrating

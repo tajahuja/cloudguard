@@ -1,5 +1,7 @@
 # Truthful resume and professional descriptions
 
+Author: tajahuja · [LinkedIn](https://www.linkedin.com/in/tajahuja/)
+
 ## Three resume bullet options
 
 - Developed CloudGuard, a Python cloud-security assessment lab with 41 modular checks across IAM, storage, network, database, compute, logging, secret hygiene and resource governance.

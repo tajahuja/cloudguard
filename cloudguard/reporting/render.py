@@ -15,7 +15,9 @@ def html_report(assessment: Assessment) -> str:
         assessment=assessment,counts=Counter(f.severity for f in assessment.findings),limitations=LIMITATIONS)
 
 def markdown_report(assessment: Assessment) -> str:
-    sections=[f'# CloudGuard — {assessment.environment_name}', '## Executive Summary',assessment.summary,
+    sections=[f'# CloudGuard — {assessment.environment_name}',
+              'Author: tajahuja · [LinkedIn](https://www.linkedin.com/in/tajahuja/) · [GitHub](https://github.com/tajahuja)',
+              '## Executive Summary',assessment.summary,
               '## Environment Overview',f'Assessment time: {assessment.assessed_at.isoformat()}. '
               f'Resources: {assessment.resource_count}. Rules: {assessment.evaluated_rule_count}.',
               '## Cloud Security Score',f'{assessment.security_score}/100. See docs/scoring.md for the formula.',

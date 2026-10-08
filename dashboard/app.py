@@ -22,9 +22,10 @@ st.title('CloudGuard')
 st.caption('Cloud configuration → explainable risk → prioritized remediation • Synthetic local assessment')
 with st.sidebar:
     st.header('Assessment workspace')
+    st.caption('Author: tajahuja')
     selected=st.selectbox('Environment',['startup','secure','vulnerable','enterprise'],key='environment')
     st.caption('Read-only local files. No AWS connection is made.')
-    st.link_button('LinkedIn','https://www.linkedin.com/in/tajahuja9/',use_container_width=True)
+    st.link_button('LinkedIn','https://www.linkedin.com/in/tajahuja/',use_container_width=True)
     st.link_button('GitHub profile','https://github.com/tajahuja',use_container_width=True)
 try:
     environment=load_environment(ROOT/f'environments/environment_{selected}.json')
