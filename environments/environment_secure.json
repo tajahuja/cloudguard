@@ -1,0 +1,265 @@
+{
+  "schema_version": "1.0",
+  "synthetic": true,
+  "name": "HarborLab secure baseline",
+  "organization": "HarborLab Fictional",
+  "account_alias": "lab-account-secure",
+  "assessed_at": "2026-10-08T09:00:00Z",
+  "resources": [
+    {
+      "resource_id": "policy-read",
+      "name": "lab-policy-read",
+      "resource_type": "iam_policy",
+      "region": "us-east-1",
+      "tags": {
+        "owner": "lab-platform-team",
+        "environment": "lab"
+      },
+      "sensitivity": "internal",
+      "criticality": "medium",
+      "properties": {
+        "statements": [
+          {
+            "effect": "Allow",
+            "actions": [
+              "s3:GetObject"
+            ],
+            "resources": [
+              "arn:aws:s3:::lab-artifacts/*"
+            ],
+            "conditions": {}
+          }
+        ]
+      },
+      "configuration": {}
+    },
+    {
+      "resource_id": "user-reader",
+      "name": "lab-user-reader",
+      "resource_type": "iam_user",
+      "region": "us-east-1",
+      "tags": {
+        "owner": "lab-platform-team",
+        "environment": "lab"
+      },
+      "sensitivity": "internal",
+      "criticality": "medium",
+      "properties": {
+        "console_access": true,
+        "mfa_enabled": true,
+        "is_root": false,
+        "last_used_days": 2,
+        "managed_policies": [],
+        "policy_ids": [
+          "policy-read"
+        ],
+        "inline_statements": [],
+        "access_keys": [],
+        "trust_principals": [
+          "compute.example.test"
+        ],
+        "trust_has_conditions": true
+      },
+      "configuration": {}
+    },
+    {
+      "resource_id": "role-worker",
+      "name": "lab-role-worker",
+      "resource_type": "iam_role",
+      "region": "us-east-1",
+      "tags": {
+        "owner": "lab-platform-team",
+        "environment": "lab"
+      },
+      "sensitivity": "internal",
+      "criticality": "medium",
+      "properties": {
+        "console_access": true,
+        "mfa_enabled": true,
+        "is_root": false,
+        "last_used_days": 2,
+        "managed_policies": [],
+        "policy_ids": [
+          "policy-read"
+        ],
+        "inline_statements": [],
+        "access_keys": [],
+        "trust_principals": [
+          "compute.example.test"
+        ],
+        "trust_has_conditions": true
+      },
+      "configuration": {}
+    },
+    {
+      "resource_id": "bucket-artifacts",
+      "name": "lab-bucket-artifacts",
+      "resource_type": "bucket",
+      "region": "us-east-1",
+      "tags": {
+        "owner": "lab-platform-team",
+        "environment": "lab"
+      },
+      "sensitivity": "internal",
+      "criticality": "medium",
+      "properties": {
+        "block_public_access": true,
+        "public_acl": false,
+        "anonymous_read": false,
+        "anonymous_write": false,
+        "policy_public": false,
+        "policy_has_conditions": true,
+        "encrypted": true,
+        "logging_enabled": true,
+        "versioning_enabled": true
+      },
+      "configuration": {}
+    },
+    {
+      "resource_id": "sg-app",
+      "name": "lab-sg-app",
+      "resource_type": "security_group",
+      "region": "us-east-1",
+      "tags": {
+        "owner": "lab-platform-team",
+        "environment": "lab"
+      },
+      "sensitivity": "internal",
+      "criticality": "medium",
+      "properties": {
+        "ingress": [
+          {
+            "protocol": "tcp",
+            "from_port": 22,
+            "to_port": 22,
+            "cidr": "192.0.2.0/24"
+          }
+        ],
+        "egress": [
+          {
+            "protocol": "tcp",
+            "from_port": 443,
+            "to_port": 443,
+            "cidr": "192.0.2.0/24"
+          }
+        ]
+      },
+      "configuration": {}
+    },
+    {
+      "resource_id": "sg-db",
+      "name": "lab-sg-db",
+      "resource_type": "security_group",
+      "region": "us-east-1",
+      "tags": {
+        "owner": "lab-platform-team",
+        "environment": "lab"
+      },
+      "sensitivity": "internal",
+      "criticality": "medium",
+      "properties": {
+        "ingress": [
+          {
+            "protocol": "tcp",
+            "from_port": 5432,
+            "to_port": 5432,
+            "cidr": "192.0.2.0/24"
+          }
+        ],
+        "egress": [
+          {
+            "protocol": "tcp",
+            "from_port": 443,
+            "to_port": 443,
+            "cidr": "192.0.2.0/24"
+          }
+        ]
+      },
+      "configuration": {}
+    },
+    {
+      "resource_id": "vm-app",
+      "name": "lab-vm-app",
+      "resource_type": "instance",
+      "region": "us-east-1",
+      "tags": {
+        "owner": "lab-platform-team",
+        "environment": "lab"
+      },
+      "sensitivity": "internal",
+      "criticality": "medium",
+      "properties": {
+        "public_ip": null,
+        "internet_route": false,
+        "security_group_ids": [
+          "sg-app"
+        ],
+        "encrypted_volumes": true,
+        "imdsv2_required": true,
+        "monitoring_enabled": true
+      },
+      "configuration": {}
+    },
+    {
+      "resource_id": "db-customer",
+      "name": "lab-db-customer",
+      "resource_type": "database",
+      "region": "us-east-1",
+      "tags": {
+        "owner": "lab-platform-team",
+        "environment": "lab"
+      },
+      "sensitivity": "confidential",
+      "criticality": "high",
+      "properties": {
+        "publicly_accessible": false,
+        "internet_route": false,
+        "port": 5432,
+        "security_group_ids": [
+          "sg-db"
+        ],
+        "encrypted": true,
+        "backups_enabled": true,
+        "deletion_protection": true,
+        "logging_enabled": true
+      },
+      "configuration": {}
+    },
+    {
+      "resource_id": "trail-control",
+      "name": "lab-trail-control",
+      "resource_type": "audit_log",
+      "region": "us-east-1",
+      "tags": {
+        "owner": "lab-platform-team",
+        "environment": "lab"
+      },
+      "sensitivity": "internal",
+      "criticality": "medium",
+      "properties": {
+        "enabled": true,
+        "multi_region": true,
+        "validation_enabled": true,
+        "retention_days": 365
+      },
+      "configuration": {}
+    },
+    {
+      "resource_id": "monitor-security",
+      "name": "lab-monitor-security",
+      "resource_type": "monitoring",
+      "region": "us-east-1",
+      "tags": {
+        "owner": "lab-platform-team",
+        "environment": "lab"
+      },
+      "sensitivity": "internal",
+      "criticality": "medium",
+      "properties": {
+        "enabled": true,
+        "retention_days": 180
+      },
+      "configuration": {}
+    }
+  ]
+}

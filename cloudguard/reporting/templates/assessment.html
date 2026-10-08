@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CloudGuard Security Assessment</title>
+<style>
+body{font:16px/1.6 system-ui,sans-serif;color:#152c25;background:#edf4f1;margin:0}
+main{max-width:1050px;margin:30px auto;padding:40px;background:white;border-top:7px solid #168260}
+h1,h2,h3{line-height:1.25}h2{border-bottom:1px solid #ccdcd3;padding-bottom:8px}
+.badge{display:inline-block;background:#e5f5ed;border-radius:5px;padding:6px 12px;margin:4px}
+.finding{border:1px solid #ccdcd3;border-left:5px solid #168260;padding:22px;margin:18px 0;break-inside:avoid}
+.CRITICAL{border-left-color:#d32e48}.HIGH{border-left-color:#c27014}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f3f7f5;padding:12px}
+table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:10px;border-bottom:1px solid #ccdcd3}
+@media print{body{background:white}main{margin:0;padding:10px}a{color:inherit}}
+</style></head><body><main>
+<p>CLOUDGUARD / SYNTHETIC SECURITY ASSESSMENT</p>
+<h1>{{ assessment.environment_name }}</h1>
+<p>{{ assessment.assessed_at.isoformat() }}</p>
+<h2>Executive Summary</h2><p>{{ assessment.summary }}</p>
+<h2>Environment Overview</h2><p>{{ assessment.resource_count }} resources; {{ assessment.evaluated_rule_count }} security rules evaluated.</p>
+<h2>Cloud Security Score</h2><span class="badge">{{ assessment.security_score }} / 100</span>
+<p>100 minus the rounded-up mean of each resource's highest unresolved risk. Educational priority model, not a certified rating.</p>
+<h2>Risk Distribution</h2>{% for level in ['CRITICAL','HIGH','MEDIUM','LOW'] %}
+<span class="badge">{{ level }}: {{ counts[level] }}</span>{% endfor %}
+<h2>Critical Findings</h2><p>{{ counts['CRITICAL'] }} findings require immediate owner review. Review actual exposure before containment.</p>
+<h2>High Findings</h2><p>{{ counts['HIGH'] }} findings should enter the next approved remediation cycle.</p>
+<h2>Affected Resources</h2><table><tr><th>Resource ID</th><th>Highest unresolved risk</th></tr>
+{% for resource, risk in assessment.resource_risks.items() %}<tr><td>{{ resource }}</td><td>{{ risk }}/100</td></tr>{% endfor %}</table>
+<h2>Prioritized Action Plan, Evidence and Remediation Recommendations</h2>
+{% for f in assessment.findings %}<article class="finding {{ f.severity }}">
+<h3>{{ loop.index }}. {{ f.title }}</h3><p>{{ f.finding_id }} · {{ f.severity }} · {{ f.risk_score }}/100 · {{ f.status }}</p>
+<p><strong>Resource:</strong> {{ f.resource_type }}/{{ f.resource_name }}</p><p>{{ f.description }}</p>
+<h4>Evidence</h4><pre>{{ f.evidence | tojson(indent=2) }}</pre>
+<p><strong>Security impact:</strong> {{ f.security_impact }}</p><p><strong>Hypothetical scenario:</strong> {{ f.attack_scenario }}</p>
+<h4>Risk reasoning</h4><ul>{% for reason in f.risk_reasons %}<li>{{ reason }}</li>{% endfor %}</ul>
+<h4>Remediation</h4><p>{{ f.remediation.urgency }}</p><ol>{% for step in f.remediation.steps %}<li>{{ step }}</li>{% endfor %}</ol>
+<p><strong>Principle:</strong> {{ f.remediation.principle }}</p><p><strong>Recommended configuration:</strong> {{ f.remediation.recommended_configuration }}</p>
+<h4>Verification</h4><ul>{% for step in f.remediation.verification_steps %}<li>{{ step }}</li>{% endfor %}</ul>
+<p>{% for ref in f.references %}<a href="{{ ref }}">Authoritative guidance</a>{% endfor %}</p>
+<p>{{ f.framework_mapping | join(', ') }}</p></article>{% endfor %}
+<h2>Limitations</h2><p>{{ limitations }}</p><h2>Conclusion</h2>
+<p>Validate ownership and dependencies, prioritize confirmed exposure, apply approved changes and rerun the assessment.</p>
+</main></body></html>

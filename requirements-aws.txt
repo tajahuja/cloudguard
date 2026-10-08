@@ -1,0 +1,2 @@
+# Optional, isolated collector only. Never used by local scan/demo.
+boto3==1.40.0
